@@ -63,25 +63,19 @@ func flattenClusterV2RKEConfigMachinePools(p []provisionv1.RKEMachinePool) []int
 		obj["etcd_role"] = in.EtcdRole
 		obj["drain_before_delete"] = in.DrainBeforeDelete
 
-		if len(in.MachineDeploymentAnnotations) > 0 {
-			obj["annotations"] = toMapInterface(in.MachineDeploymentAnnotations)
-		}
-		if len(in.MachineDeploymentLabels) > 0 {
-			obj["labels"] = toMapInterface(in.MachineDeploymentLabels)
-		}
-		if len(in.Labels) > 0 {
-			obj["machine_labels"] = toMapInterface(in.Labels)
-		}
+		obj["annotations"] = toMapInterface(in.MachineDeploymentAnnotations)
+		obj["labels"] = toMapInterface(in.MachineDeploymentLabels)
+		obj["machine_labels"] = toMapInterface(in.Labels)
+
 		obj["paused"] = in.Paused
 		if in.Quantity != nil {
 			obj["quantity"] = int(*in.Quantity)
 		}
 		if in.RollingUpdate != nil {
 			obj["rolling_update"] = flattenClusterV2RKEConfigMachinePoolRollingUpdate(in.RollingUpdate)
-		}
-		if len(in.Taints) > 0 {
-			obj["taints"] = flattenTaintsV2(in.Taints)
-		}
+
+		obj["taints"] = flattenTaintsV2(in.Taints)
+
 		obj["worker_role"] = in.WorkerRole
 		out[i] = obj
 
